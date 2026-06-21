@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://cbatrbi1cgoly"]
+
+[node name="Ground" type="Area2D" unique_id=1729715595]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=449445417]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=290541665]
