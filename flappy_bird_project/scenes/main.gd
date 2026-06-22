@@ -1,5 +1,7 @@
 extends Node
 
+@export var pipe_scene : PackedScene
+
 var game_running : bool
 var game_over : bool
 var scroll
@@ -13,14 +15,18 @@ const PIPE_RANGE : int = 200
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	screen_size = get_window().size
+	ground_height = $Ground.get_node("Sprite2D").texture.get_height()
 	new_game()
 	
 func new_game():
-	#rest varieable
+	#reset variable
 	game_running = false
 	game_over = false
 	score = 0
 	scroll = 0
+	pipes.clear()
+	generate_pipes()
 	$Bird.reset()
 	
 func _input(event):
@@ -32,11 +38,39 @@ func _input(event):
 				else:
 					if $Bird.flying:
 						$Bird.flap()
-						
+
 func start_game():
 	game_running = true
 	$Bird.flying = true
 	$Bird.flap()
+	$PipeTimer.start()
 
 func _process(delta):
+	if game_running:
+		scroll += SCROLL_SPEED
+		# reset scroll speed
+		if scroll >= screen_size.x:
+			scroll = wrap(scroll,0, screen_size.x)
+			#move ground node
+		$Ground.position.x = -scroll
+		for pipe in pipes:
+			pipe.position.x -= SCROLL_SPEED
+
+
+func _on_ground_body_entered(body):
+	pass # Replace with function body.
+
+
+func _on_pipe_timer_timeout():
+	generate_pipes()
+	
+func generate_pipes():
+	var pipe = pipe_scene.instantiate()
+	pipe.position.x =screen_size.x + PIPE_DELAY
+	pipe.position.y = (screen_size.y - ground_height) /2 + randi_range(-PIPE_RANGE, PIPE_RANGE)
+	pipe.hit.connect(bird_hit)
+	add_child(pipe)
+	pipes.append(pipe)
+
+func bird_hit():
 	pass

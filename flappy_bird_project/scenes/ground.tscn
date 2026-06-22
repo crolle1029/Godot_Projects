@@ -1,7 +1,21 @@
 [gd_scene format=3 uid="uid://cbatrbi1cgoly"]
 
+[ext_resource type="Script" uid="uid://cndgifadbpqii" path="res://scenes/ground.gd" id="1_pybca"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_7ylpw"]
+load_path = "res://.godot/imported/ground.png-e5244df5a0ef0c2e9be31bc55d365d30.ctex"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tbgi4"]
+size = Vector2(1725, 166)
+
 [node name="Ground" type="Area2D" unique_id=1729715595]
+script = ExtResource("1_pybca")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=449445417]
+position = Vector2(0, 852)
+texture = SubResource("CompressedTexture2D_7ylpw")
+offset = Vector2(864, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=290541665]
+position = Vector2(863.5, 854)
+shape = SubResource("RectangleShape2D_tbgi4")

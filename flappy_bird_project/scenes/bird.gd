@@ -20,19 +20,24 @@ func reset():
 # Called every frame. 'delta' is the elased time since the previous frame.
 func _physics_process(delta):
 	if flying or falling:
-		velocity.y += GRAVITY + delta
+		velocity.y += GRAVITY * delta
 		#terminal velocity
 		if velocity.y > MAX_VEL:
 			velocity.y = MAX_VEL
 		if flying:
-			set_rotation(deg_to_rad(velocity.y *0.05))
+			print("flying")
+			set_rotation(deg_to_rad(velocity.y * 0.05))
 			$AnimatedSprite2D.play()
 		elif falling:
+			print("Falling")
 			set_rotation(PI/2)
 			$AnimatedSprite2D.stop()
-		move_and_collide(velocity * delta)
+		
+		move_and_slide()
 	else:
+		print("Stuck in else")
 		$AnimatedSprite2D.stop()
+
 			
 func flap():
 	velocity.y = FLAP_SPEED
